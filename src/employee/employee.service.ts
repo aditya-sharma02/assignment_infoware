@@ -4,6 +4,7 @@ import { EmployeeEntity } from './entity/employee.entity';
 import { Repository } from 'typeorm';
 import { CreateDto, UpdateDto } from './dto';
 import { ContactEntitiy } from './entity/contact.entity';
+import e from 'express';
 
 
 @Injectable()
@@ -114,7 +115,8 @@ export class EmployeeService {
             }
             await this.employeeRepo.remove(data)
             const data1 = await this.contactRepo.findOne({ where: { foreignkey: data.id } });
-            await this.contactRepo.remove(data1)
+            await this.contactRepo.remove(data1).then(() => {
+            }).catch(()=>console.log(e))
 
             return "Employee Deleted !!! thank you"
 
